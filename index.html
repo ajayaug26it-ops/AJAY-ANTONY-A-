@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ajay Antony A — Portfolio</title>
+<meta name="description" content="Portfolio of Ajay Antony A, a first-year B.Tech Information Technology student, laid out as a collectible card and character sheet.">
+<meta name="theme-color" content="#2E5E4A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Rozha+One&display=swap" rel="stylesheet">
+<script>
+(function(){var d=document.documentElement;d.classList.add('js');
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('opening');}else{d.classList.add('go');}})();
+</script>
+<style>
+/* ==========================================================
+   WORLD: trading card + RPG character sheet.
+   Card stock, thick ink borders, hard offset shadows, foil stripes,
+   graph-paper sheet, quest log, ability list, a d20.
+   Colours: pine green, amber gold, brick red. Neutrals: card cream, ink.
+   ========================================================== */
+:root{
+  --paper:#EFE5CC;
+  --card:#F8F1DF;
+  --ink:#231A14;
+  --green:#2E5E4A;
+  --gold:#D8A03A;
+  --red:#B4442B;
+  --display:'Rozha One',Georgia,'Times New Roman',serif;
+  --mono:'Courier Prime','Courier New',ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.75,.2,1);
+  --sx:4; --sy:4;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html.opening,html.opening body{overflow:hidden}
+body{
+  background-color:var(--paper);
+  background-image:linear-gradient(rgba(35,26,20,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(35,26,20,.055) 1px,transparent 1px);
+  background-size:32px 32px;
+  color:var(--ink);font-family:var(--mono);font-size:15px;line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased
+}
+::selection{background:var(--gold);color:var(--ink)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+h1,h2,h3{font-weight:400}
+
+/* ---------- opening: a card is drawn, flipped and foil-struck ---------- */
+#opening{position:fixed;inset:0;z-index:200;background:var(--green);display:none;place-items:center;perspective:1100px;overflow:hidden}
+html.opening #opening{display:grid}
+#opening.out{animation:lift .4s var(--ease) forwards}
+@keyframes lift{to{transform:translateY(-100%)}}
+.op-stage{display:grid;justify-items:center;gap:22px}
+.op-card{position:relative;width:min(62vw,250px);aspect-ratio:5/7;transform-style:preserve-3d;animation:draw 1.6s both}
+@keyframes draw{
+  0%{transform:translateY(80vh) rotateY(180deg) rotateZ(-10deg);animation-timing-function:cubic-bezier(.15,.8,.2,1)}
+  38%{transform:translateY(0) rotateY(180deg) rotateZ(0);animation-timing-function:linear}
+  46%{transform:translateY(0) rotateY(180deg) rotateZ(0);animation-timing-function:cubic-bezier(.55,0,.2,1)}
+  78%{transform:translateY(0) rotateY(360deg) rotateZ(0)}
+  100%{transform:translateY(0) rotateY(360deg) rotateZ(0) scale(1.04)}
+}
+.op-face{position:absolute;inset:0;border:4px solid var(--ink);border-radius:18px;-webkit-backface-visibility:hidden;backface-visibility:hidden;overflow:hidden;box-shadow:6px 6px 0 var(--ink)}
+.op-back{transform:rotateY(180deg);background-color:var(--ink);
+  background-image:repeating-linear-gradient(45deg,transparent 0 11px,rgba(216,160,58,.6) 11px 12.5px),repeating-linear-gradient(-45deg,transparent 0 11px,rgba(216,160,58,.6) 11px 12.5px);
+  display:grid;place-items:center}
+.op-back::before{content:"";position:absolute;inset:9px;border:3px solid var(--gold);border-radius:10px}
+.op-seal{width:70px;height:70px;border:3px solid var(--gold);background:var(--ink);transform:rotate(45deg);display:grid;place-items:center}
+.op-seal span{transform:rotate(-45deg);font:400 30px var(--display);color:var(--gold)}
+.op-front{background:var(--gold);padding:8px}
+.op-cap{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--paper);animation:fadein .5s .9s both}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+.skip{position:absolute;right:20px;bottom:20px;font:700 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;background:none;border:0;border-bottom:3px solid var(--gold);color:var(--paper);padding:12px 4px 4px;min-height:44px;cursor:pointer}
+.skip:hover{color:var(--gold)}
+
+/* ---------- card (used in opening and hero) ---------- */
+.c-in{height:100%;display:flex;flex-direction:column;background:var(--card);border:3px solid var(--ink);border-radius:10px;overflow:hidden}
+.c-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:6px 9px;border-bottom:3px solid var(--ink);font:400 clamp(13px,4vw,16px)/1.2 var(--display)}
+.c-lv{color:var(--red);white-space:nowrap}
+.c-art{flex:1;min-height:0;margin:6px;border:3px solid var(--ink);border-radius:6px;background:repeating-linear-gradient(135deg,var(--gold) 0 7px,#E3B253 7px 14px);display:grid;place-items:center;padding:6px}
+.crest{width:100%;height:100%;display:block}
+.c-type{padding:4px 9px;background:var(--green);color:var(--paper);font-size:10px;letter-spacing:.1em;text-transform:uppercase;border-top:3px solid var(--ink);border-bottom:3px solid var(--ink)}
+.c-text{padding:7px 9px;font-size:11px;line-height:1.4}
+.c-text b{text-transform:uppercase;letter-spacing:.08em;margin-right:6px;color:var(--red)}
+.c-foot{display:flex;justify-content:space-between;padding:4px 9px 6px;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;border-top:2px solid var(--ink)}
+.foil{position:absolute;inset:8px;border-radius:10px;pointer-events:none;z-index:2;
+  background:linear-gradient(115deg,transparent 34%,rgba(255,255,255,.5) 45%,rgba(216,160,58,.45) 52%,transparent 63%) var(--mx,50%) 0/260% 100% no-repeat}
+.op-front .foil{animation:sweep .75s 1.2s var(--ease) both}
+@keyframes sweep{from{background-position:115% 0}to{background-position:-15% 0}}
+
+/* ---------- top bar ---------- */
+.bar{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:3px solid var(--ink);display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 20px}
+.bar-mark{display:none;font:400 1.5rem/1 var(--display);text-decoration:none}
+.bar nav{display:flex;justify-content:space-between;width:100%;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.bar nav a{text-decoration:none;padding:7px 0;background:linear-gradient(var(--gold),var(--gold)) 0 100%/0 4px no-repeat;transition:background-size .3s var(--ease)}
+.bar nav a:hover{background-size:100% 4px}
+
+/* ---------- shared ---------- */
+.sec{position:relative;padding:80px 20px 88px;border-top:3px solid var(--ink)}
+.sec.gold{background:var(--gold);--hl:var(--card)}
+.sec.green{background:var(--green);color:var(--paper);--hl:var(--gold)}
+.wrap{max-width:1180px;margin:0 auto}
+.eyebrow{display:inline-block;background:var(--ink);color:var(--paper);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:5px 11px;border-radius:6px;margin-bottom:18px}
+.sec.green .eyebrow{background:var(--gold);color:var(--ink)}
+h2{font:400 clamp(3.1rem,15vw,7.4rem)/.92 var(--display);text-shadow:4px 4px 0 var(--hl,var(--gold));margin-bottom:34px;letter-spacing:-.01em}
+.panel{background:var(--card);border:3px solid var(--ink);border-radius:14px;box-shadow:6px 6px 0 var(--ink);overflow:hidden;color:var(--ink)}
+.panel-h{display:flex;justify-content:space-between;gap:12px;background:var(--green);color:var(--paper);padding:9px 16px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;border-bottom:3px solid var(--ink)}
+.panel-b{padding:22px 18px}
+
+html.js .rv{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease);transition-delay:var(--d,0s)}
+html.js .rv.in{opacity:1;transform:none}
+
+/* ---------- 01 landing ---------- */
+.hero{position:relative;padding:26px 20px 64px;overflow:hidden}
+.hero-grid{max-width:1180px;margin:0 auto;display:grid;gap:18px;grid-template-areas:"set" "name" "card" "tag"}
+.set-line{grid-area:set;display:flex;flex-wrap:wrap;gap:2px 16px;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.name{grid-area:name;font:400 min(22vw,100px)/.9 var(--display);letter-spacing:-.01em;text-shadow:calc(var(--sx)*1px) calc(var(--sy)*1px) 0 var(--gold);margin-top:6px}
+.name span{display:block;white-space:nowrap}
+.name .l2{padding-left:.35em}
+.name .l3{color:var(--green)}
+.card-side{grid-area:card;justify-self:end;width:min(66vw,270px)}
+.card-wrap{width:100%;aspect-ratio:5/7;perspective:900px;transform:rotate(2deg);animation:float 6s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-8px) rotate(.6deg)}}
+.card{position:relative;width:100%;height:100%;padding:8px;background:var(--gold);border:4px solid var(--ink);border-radius:18px;box-shadow:6px 6px 0 var(--ink);transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .3s var(--ease);will-change:transform;touch-action:pan-y}
+.hint{margin-top:16px;font-size:12px;text-align:right}
+.tag-block{grid-area:tag;display:grid;gap:20px}
+.tag{font:400 clamp(1.5rem,6.2vw,2.4rem)/1.12 var(--display);max-width:21ch}
+.now{display:flex;gap:10px;align-items:baseline;font-size:14px;max-width:46ch}
+.now b{flex:none;background:var(--red);color:var(--card);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:1px 8px;border-radius:5px}
+.btns{display:flex;flex-wrap:wrap;gap:16px 18px}
+.btn{display:inline-block;text-decoration:none;font:700 13px var(--mono);letter-spacing:.12em;text-transform:uppercase;padding:14px 24px;min-height:48px;border:3px solid var(--ink);border-radius:10px;box-shadow:4px 4px 0 var(--ink);transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+.btn.solid{background:var(--green);color:var(--paper)}
+.btn.line{background:var(--gold);color:var(--ink)}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+.btn:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--ink)}
+html.opening:not(.go) .hero .a{opacity:0}
+html.go .hero .a{animation:rise .9s var(--ease) both;animation-delay:calc(var(--i,0)*90ms)}
+@keyframes rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+
+/* ---------- 02 about ---------- */
+.about-grid{display:grid;gap:30px}
+.flavor{background:var(--gold);border:3px solid var(--ink);border-radius:12px;padding:16px 18px;transform:rotate(-2deg);box-shadow:5px 5px 0 var(--ink);max-width:330px;font-style:italic;font-size:16px;line-height:1.5}
+.flavor small{display:block;font-style:normal;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px;color:var(--red);font-weight:700}
+.prose p{max-width:58ch}
+.prose p+p{margin-top:1.1em}
+.prose p:first-child::first-letter{font:400 3.9em/.8 var(--display);float:left;padding:.06em .1em 0 0;color:var(--red)}
+
+/* ---------- 03 skills ---------- */
+.key{display:flex;flex-wrap:wrap;gap:6px 20px;font-size:12px;margin-bottom:12px}
+.key span{display:inline-flex;align-items:center;gap:9px}
+.abil{list-style:none}
+.abil li{display:grid;gap:2px;padding:10px 0;border-bottom:2px dotted rgba(35,26,20,.5)}
+.abil li:last-child{border-bottom:0}
+.abil .nm{font-weight:700;font-size:16px}
+.abil .dots{display:none}
+.abil .rk{display:inline-flex;align-items:center;gap:11px;font-style:italic;font-size:13px}
+.abil .rk.c{color:var(--red)}
+.gem{width:11px;height:11px;border:2px solid var(--ink);transform:rotate(45deg);flex:none;background:transparent;display:inline-block}
+.gem.f{background:var(--ink)}
+.gem.h{background:linear-gradient(90deg,var(--ink) 50%,transparent 50%)}
+.gem.d{border-style:dashed;border-color:var(--red)}
+
+/* ---------- 04 quests ---------- */
+.runs{display:grid;gap:40px}
+.quest{position:relative;background:var(--card);border:3px solid var(--ink);border-radius:14px;padding:30px 18px 20px;box-shadow:6px 6px 0 var(--sh,var(--ink));color:var(--ink)}
+.q-tag{position:absolute;top:-15px;left:16px;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:3px 10px;border:3px solid var(--ink);border-radius:8px}
+.quest.done{--sh:var(--green)}
+.done .q-tag{background:var(--green);color:var(--paper)}
+.quest.now{--sh:var(--ink)}
+.now-q .q-tag,.quest.now .q-tag{background:var(--gold)}
+.quest.next{border-style:dashed;--sh:var(--red)}
+.next .q-tag{background:var(--card);color:var(--red);border-style:dashed;border-color:var(--red)}
+.quest h3{font:400 1.8rem/1.05 var(--display);margin-bottom:10px}
+.quest p{font-size:14.5px;max-width:48ch}
+.quest p+p{margin-top:.7em}
+.quest .rw{margin-top:14px;font-size:13px;font-style:italic}
+.quest .rw b{font-style:normal;text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--red);margin-right:6px}
+
+/* ---------- 05 beyond ---------- */
+.beyond-grid{display:grid;gap:44px}
+.big{font:400 clamp(1.7rem,6.4vw,2.8rem)/1.1 var(--display);max-width:16em;margin-bottom:30px}
+.big em{font-style:normal;color:var(--red)}
+.ach-h{font:400 1.7rem/1 var(--display);margin-bottom:16px}
+.ach{list-style:none;display:grid;gap:16px}
+.ach li{display:flex;gap:16px;align-items:center}
+.tok{width:50px;height:50px;flex:none;transition:transform .35s var(--ease)}
+.ach li:hover .tok{transform:rotate(-14deg) scale(1.1)}
+.ach .t{font-weight:700;display:block;line-height:1.3}
+.ach .s{display:block;font-size:13px;line-height:1.4}
+.ach li.lock{opacity:.72}
+
+/* ---------- 06 contact ---------- */
+.links{list-style:none;display:grid;gap:16px;max-width:900px}
+.links a{display:grid;grid-template-columns:1fr auto;gap:2px 14px;align-items:end;background:var(--card);color:var(--ink);border:3px solid var(--ink);border-radius:14px;padding:16px 18px;text-decoration:none;box-shadow:5px 5px 0 var(--ink);transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.links a:hover{transform:translate(-3px,-3px) rotate(-.5deg);box-shadow:9px 9px 0 var(--gold)}
+.links .k{grid-column:1/-1;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
+.links .v{font:400 clamp(1.35rem,6.4vw,2.6rem)/1.1 var(--display);overflow-wrap:anywhere}
+.links svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:2.4;transition:transform .3s var(--ease)}
+.links a:hover svg{transform:translate(4px,-4px)}
+.sub{max-width:44ch;margin-bottom:28px}
+
+.foot{background:var(--ink);color:var(--paper);border-top:3px solid var(--ink);padding:24px 20px 30px;display:flex;justify-content:space-between;align-items:center;gap:20px;font-size:12px}
+.die{background:none;border:0;width:48px;height:48px;cursor:pointer;flex:none;display:grid;place-items:center}
+.die svg{width:36px;height:36px;display:block}
+.die.spin svg{animation:spin .9s var(--ease)}
+@keyframes spin{to{transform:rotate(720deg)}}
+.toast{position:fixed;left:50%;bottom:20px;z-index:300;transform:translate(-50%,160%);background:var(--card);color:var(--ink);border:3px solid var(--ink);border-radius:12px;box-shadow:5px 5px 0 var(--gold);padding:12px 16px;width:min(92vw,390px);transition:transform .45s var(--ease);font-size:14px;line-height:1.45}
+.toast.on{transform:translate(-50%,0)}
+.toast b{font:400 1.5rem/1 var(--display);display:block;margin-bottom:2px}
+html.legend .foil{background-image:linear-gradient(115deg,transparent 22%,rgba(255,255,255,.7) 40%,rgba(180,68,43,.4) 50%,rgba(255,255,255,.6) 60%,transparent 78%)}
+html.legend .card{border-color:var(--red)}
+
+/* ---------- wider screens ---------- */
+@media(min-width:480px){.bar-mark{display:block}.bar nav{width:auto;gap:26px}}
+@media(min-width:560px){
+  .abil li{display:flex;align-items:baseline;gap:12px}
+  .abil .dots{display:block;flex:1;min-width:16px;border-bottom:2px dotted rgba(35,26,20,.55);transform:translateY(-4px)}
+  .abil li{border-bottom:0;padding:9px 0}
+  .abil .rk{white-space:nowrap}
+}
+@media(min-width:820px){
+  body{font-size:16px}
+  .bar{padding:12px 48px}
+  .bar nav{font-size:12px;gap:34px}
+  .sec{padding:120px 48px 128px}
+  .hero{padding:44px 48px 90px}
+  .hero-grid{grid-template-columns:minmax(0,1fr) 340px;grid-template-areas:"set card" "name card" "tag card";column-gap:56px;row-gap:24px;align-items:start}
+  .name{font-size:min(11vw,24vh,9.5rem)}
+  .card-side{width:340px;align-self:center;justify-self:end}
+  .tag{font-size:clamp(2rem,2.8vw,2.8rem)}
+  .c-head{font-size:19px}
+  .c-type{font-size:11px}
+  .c-text{font-size:12.5px}
+  .about-grid{grid-template-columns:5fr 7fr;gap:72px;align-items:start}
+  .panel-b{padding:30px 32px}
+  .abil .nm{font-size:18px}
+  .abil .rk{font-size:14px}
+  .runs{gap:56px}
+  .quest{max-width:760px;padding:34px 32px 26px}
+  .quest.now{margin-left:9vw}
+  .quest.next{margin-left:18vw}
+  .quest h3{font-size:2.4rem}
+  .beyond-grid{grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+  .big{grid-column:1/-1}
+  .foot{padding:26px 48px 34px}
+}
+
+/* ---------- reduced motion ---------- */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html.js .rv{opacity:1;transform:none}
+  html.opening:not(.go) .hero .a{opacity:1}
+}
+</style>
+</head>
+<body>
+
+<!-- shared drawings: stripes + crest (shield with the initials) + achievement tokens -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="stripes" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="10" height="10" fill="#2E5E4A"/><rect width="4" height="10" fill="#26503F"/>
+    </pattern>
+    <symbol id="crest" viewBox="0 0 200 180">
+      <path d="M100 8 L188 30 V88 C188 130 150 158 100 172 C50 158 12 130 12 88 V30 Z" fill="url(#stripes)" stroke="#231A14" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M100 20 L176 38 V88 C176 122 144 146 100 159 C56 146 24 122 24 88 V38 Z" fill="none" stroke="#D8A03A" stroke-width="3"/>
+      <g fill="#D8A03A" stroke="#231A14" stroke-width="1.6" stroke-linejoin="round">
+        <polygon transform="translate(66 56)" points="0,-7 2,-2 7,-2 3,1.5 4.5,6.5 0,3.5 -4.5,6.5 -3,1.5 -7,-2 -2,-2"/>
+        <polygon transform="translate(100 47) scale(1.25)" points="0,-7 2,-2 7,-2 3,1.5 4.5,6.5 0,3.5 -4.5,6.5 -3,1.5 -7,-2 -2,-2"/>
+        <polygon transform="translate(134 56)" points="0,-7 2,-2 7,-2 3,1.5 4.5,6.5 0,3.5 -4.5,6.5 -3,1.5 -7,-2 -2,-2"/>
+      </g>
+      <text x="105" y="125" text-anchor="middle" font-family="'Rozha One',Georgia,serif" font-size="78" fill="#231A14">AA</text>
+      <text x="100" y="120" text-anchor="middle" font-family="'Rozha One',Georgia,serif" font-size="78" fill="#D8A03A" stroke="#231A14" stroke-width="2.2" stroke-linejoin="round" paint-order="stroke">AA</text>
+    </symbol>
+    <symbol id="tok-on" viewBox="0 0 50 50">
+      <circle cx="25" cy="25" r="21" fill="#D8A03A" stroke="#231A14" stroke-width="3.5"/>
+      <circle cx="25" cy="25" r="15" fill="none" stroke="#231A14" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <path d="M16 26 L22 32 L34 18" fill="none" stroke="#231A14" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="tok-off" viewBox="0 0 50 50">
+      <circle cx="25" cy="25" r="21" fill="#F8F1DF" stroke="#231A14" stroke-width="3.5" stroke-dasharray="5 4"/>
+      <rect x="17" y="24" width="16" height="12" rx="2" fill="#231A14"/>
+      <path d="M20 24 V20 a5 5 0 0 1 10 0 V24" fill="none" stroke="#231A14" stroke-width="3.2"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- OPENING: a card is drawn from the deck, flipped, and struck with foil. Under 2.5s, plays once, skippable. -->
+<div id="opening" role="dialog" aria-label="Intro animation">
+  <div class="op-stage">
+    <div class="op-card">
+      <div class="op-face op-back" aria-hidden="true"><div class="op-seal"><span>A</span></div></div>
+      <div class="op-face op-front" aria-hidden="true">
+        <div class="c-in">
+          <div class="c-head"><span>Ajay Antony A</span><span class="c-lv">LV 1</span></div>
+          <div class="c-art"><svg class="crest" viewBox="0 0 200 180"><use href="#crest"/></svg></div>
+          <div class="c-type">Student &middot; Information Technology</div>
+          <div class="c-foot"><span>Common</span><span>001 / &infin;</span></div>
+        </div>
+        <span class="foil"></span>
+      </div>
+    </div>
+    <p class="op-cap">Drawing card 001</p>
+  </div>
+  <button class="skip" id="skip" type="button">Skip</button>
+</div>
+
+<header class="bar">
+  <a class="bar-mark" href="#top" aria-label="Back to top">A.A.</a>
+  <nav aria-label="Sections">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#journey">Journey</a>
+    <a href="#beyond">Beyond</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- ============ 01 LANDING: the card ============ -->
+<section class="hero" id="top">
+  <div class="hero-grid">
+    <p class="set-line a" style="--i:0"><span>Card 001</span><span>First-year B.Tech &middot; Information Technology</span><span>2026</span></p>
+
+    <h1 class="name a" style="--i:1" aria-label="Ajay Antony A">
+      <span aria-hidden="true">Ajay</span><span class="l2" aria-hidden="true">Antony</span><span class="l3" aria-hidden="true">A.</span>
+    </h1>
+
+    <div class="card-side a" style="--i:2">
+      <div class="card-wrap">
+        <article class="card" data-tilt aria-label="Character card for Ajay Antony A">
+          <div class="c-in">
+            <div class="c-head"><span>Ajay Antony A</span><span class="c-lv">LV 1</span></div>
+            <div class="c-art"><svg class="crest" viewBox="0 0 200 180" role="img" aria-label="Crest with the initials A A"><use href="#crest"/></svg></div>
+            <div class="c-type">Student &middot; Information Technology</div>
+            <!-- EDIT: your own card ability text -->
+            <p class="c-text"><b>Ability</b>Takes things apart to see how they work.</p>
+            <div class="c-foot"><span id="rare">Common</span><span>001 / &infin;</span></div>
+          </div>
+          <span class="foil" aria-hidden="true"></span>
+        </article>
+      </div>
+      <p class="hint">Move your cursor, or drag a finger, over the card.</p>
+    </div>
+
+    <div class="tag-block">
+      <!-- EDIT: tagline in your own words -->
+      <p class="tag a" style="--i:3">Learning to build things properly, one small piece at a time.</p>
+      <!-- EDIT: your current quest -->
+      <p class="now a" style="--i:4"><b>Now</b><span>Finding out how the web works underneath, and reading error messages calmly.</span></p>
+      <div class="btns a" style="--i:5">
+        <a class="btn solid" href="#about">Explore</a>
+        <a class="btn line" href="#contact">Say hi</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 ABOUT: backstory ============ -->
+<section class="sec" id="about">
+  <div class="wrap about-grid">
+    <div>
+      <p class="eyebrow rv">Card 02 &middot; Backstory</p>
+      <h2 class="rv">About</h2>
+      <div class="flavor rv" style="--d:.1s"><small>Flavor text</small>I would rather understand why it runs than copy something that does.</div>
+    </div>
+    <!-- EDIT: rewrite this in your own voice, with your real story -->
+    <div class="panel rv" style="--d:.1s">
+      <div class="panel-h"><span>Origin story</span><span>Year 1</span></div>
+      <div class="panel-b prose">
+        <p>I'm Ajay, a first-year B.Tech student in Information Technology. A few months in, I'm still at the stage where every new idea feels like a door I hadn't noticed before.</p>
+        <p>I like taking things apart to see how they work. It's slower than following a tutorial word for word, but it means that when something breaks, I'm not completely lost. I'd rather be confused for an hour and understand the answer than be quick and never know why.</p>
+        <p>Right now I'm building the basics: how programs are structured, how the web fits together, how to ask a good question when I'm stuck. This portfolio is part of that. I made every piece of it by hand, and I wanted it to feel like something a person made, because one did.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 SKILLS: abilities ============ -->
+<section class="sec" id="skills">
+  <div class="wrap">
+    <p class="eyebrow rv">Card 03 &middot; Abilities</p>
+    <h2 class="rv">Skills</h2>
+    <!-- EDIT: change ranks so they are honest -->
+    <div class="panel rv">
+      <div class="panel-h"><span>Ability list</span><span>No numbers, just honesty</span></div>
+      <div class="panel-b">
+        <div class="key" aria-hidden="true">
+          <span><i class="gem f"></i>Comfortable</span>
+          <span><i class="gem h"></i>Getting comfortable</span>
+          <span><i class="gem"></i>Learning</span>
+          <span><i class="gem d"></i>Locked: curious</span>
+        </div>
+        <ul class="abil">
+          <li><span class="nm">HTML</span><span class="dots"></span><span class="rk"><i class="gem f"></i>Comfortable</span></li>
+          <li><span class="nm">CSS basics</span><span class="dots"></span><span class="rk"><i class="gem f"></i>Comfortable</span></li>
+          <li><span class="nm">Python</span><span class="dots"></span><span class="rk"><i class="gem h"></i>Getting comfortable</span></li>
+          <li><span class="nm">Git and GitHub</span><span class="dots"></span><span class="rk"><i class="gem h"></i>Getting comfortable</span></li>
+          <li><span class="nm">JavaScript basics</span><span class="dots"></span><span class="rk"><i class="gem h"></i>Getting comfortable</span></li>
+          <li><span class="nm">C</span><span class="dots"></span><span class="rk"><i class="gem"></i>Learning</span></li>
+          <li><span class="nm">Data structures</span><span class="dots"></span><span class="rk"><i class="gem"></i>Learning</span></li>
+          <li><span class="nm">Algorithms</span><span class="dots"></span><span class="rk"><i class="gem"></i>Learning</span></li>
+          <li><span class="nm">How the web works</span><span class="dots"></span><span class="rk"><i class="gem"></i>Learning</span></li>
+          <li><span class="nm">Databases</span><span class="dots"></span><span class="rk c"><i class="gem d"></i>Locked: curious</span></li>
+          <li><span class="nm">Cybersecurity</span><span class="dots"></span><span class="rk c"><i class="gem d"></i>Locked: curious</span></li>
+          <li><span class="nm">Machine learning</span><span class="dots"></span><span class="rk c"><i class="gem d"></i>Locked: curious</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 JOURNEY: quest log ============ -->
+<section class="sec gold" id="journey">
+  <div class="wrap">
+    <p class="eyebrow rv">Card 04 &middot; Quest log</p>
+    <h2 class="rv">Journey</h2>
+    <!-- EDIT: replace with your real projects -->
+    <div class="runs">
+      <article class="quest done rv">
+        <span class="q-tag">Cleared</span>
+        <h3>What I've made</h3>
+        <p>This portfolio: my first site built completely by hand, in a single file, starting from a blank page.</p>
+        <p>Small practice programs from my first-year classes, the kind you write mainly to find out what you don't understand yet.</p>
+        <p class="rw"><b>Reward</b>A site I'm proud to share.</p>
+      </article>
+      <article class="quest now rv" style="--d:.08s">
+        <span class="q-tag">In progress</span>
+        <h3>What I'm learning</h3>
+        <p>Programming fundamentals, how HTML, CSS and JavaScript fit together, and how to think in data structures. Also: reading an error message as a clue instead of an insult.</p>
+        <p class="rw"><b>Reward</b>Fewer mystery errors.</p>
+      </article>
+      <article class="quest next rv" style="--d:.16s">
+        <span class="q-tag">Unlocks next</span>
+        <h3>What I want to build</h3>
+        <p>Something small that real people actually use. Maybe a tool for students like me, or a site for a local group that needs one. I don't know which yet, and I'd like to find out by building it.</p>
+        <p class="rw"><b>Reward</b>Something real, with real users.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 BEYOND CODE: side quests ============ -->
+<section class="sec" id="beyond">
+  <div class="wrap">
+    <p class="eyebrow rv">Card 05 &middot; Side quests</p>
+    <h2 class="rv">Beyond code</h2>
+    <div class="beyond-grid">
+      <p class="big rv">The part that doesn't fit on a <em>CV</em>.</p>
+      <!-- EDIT: replace with your real hobbies and fun facts -->
+      <div class="rv">
+        <h3 class="ach-h">Unlocked</h3>
+        <ul class="ach">
+          <li><svg class="tok" aria-hidden="true"><use href="#tok-on"/></svg><span><span class="t">Wrote my first program</span><span class="s">Smaller than I expected, prouder than I expected.</span></span></li>
+          <li><svg class="tok" aria-hidden="true"><use href="#tok-on"/></svg><span><span class="t">Built a website by hand</span><span class="s">You're looking at it.</span></span></li>
+          <li><svg class="tok" aria-hidden="true"><use href="#tok-on"/></svg><span><span class="t">Best ideas arrive away from the screen</span><span class="s">Walks help. So does explaining things to someone else.</span></span></li>
+        </ul>
+      </div>
+      <div class="rv" style="--d:.1s">
+        <h3 class="ach-h">Still locked</h3>
+        <ul class="ach">
+          <li class="lock"><svg class="tok" aria-hidden="true"><use href="#tok-off"/></svg><span><span class="t">Ship something real people use</span><span class="s">The next quest.</span></span></li>
+          <li class="lock"><svg class="tok" aria-hidden="true"><use href="#tok-off"/></svg><span><span class="t">Explain recursion without panic</span><span class="s">Working on it.</span></span></li>
+          <li class="lock"><svg class="tok" aria-hidden="true"><use href="#tok-off"/></svg><span><span class="t">A longer fun-facts list</span><span class="s">I'm new here. This is the first draft.</span></span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 CONTACT ============ -->
+<section class="sec green" id="contact">
+  <div class="wrap">
+    <p class="eyebrow rv">Card 06 &middot; Join the party</p>
+    <h2 class="rv">Say hi.</h2>
+    <p class="sub rv">Questions, ideas, project help, or just a hello. I'm happy to hear from you.</p>
+    <!-- EDIT: put your real links here -->
+    <ul class="links rv">
+      <li><a href="mailto:your.name@example.com"><span class="k">Email</span><span class="v">your.name@example.com</span><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M5 23 23 5M9 5h14v14"/></svg></a></li>
+      <li><a href="https://www.linkedin.com/in/your-name" target="_blank" rel="noopener"><span class="k">LinkedIn</span><span class="v">linkedin.com/in/your-name</span><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M5 23 23 5M9 5h14v14"/></svg></a></li>
+      <li><a href="https://github.com/your-username" target="_blank" rel="noopener"><span class="k">GitHub</span><span class="v">github.com/your-username</span><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M5 23 23 5M9 5h14v14"/></svg></a></li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <p>Card 001 &middot; &copy; 2026 Ajay Antony A. Set in Rozha One and Courier Prime. Drawn by hand in CSS.</p>
+  <!-- hidden easter egg: roll the d20 (or type "roll") -->
+  <button class="die" id="die" type="button" aria-label="d20">
+    <svg viewBox="0 0 40 40" aria-hidden="true"><polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="none" stroke="#D8A03A" stroke-width="2.4" stroke-linejoin="round"/><polygon points="20,10 30,27 10,27" fill="none" stroke="#D8A03A" stroke-width="1.8" stroke-linejoin="round"/><path d="M20 2V10M36 11 30 27M4 11 10 27M20 38V27" stroke="#D8A03A" stroke-width="1.4"/></svg>
+  </button>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><b id="t-n"></b><span id="t-m"></span></div>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- opening: plays once, skippable ---- */
+  var op=document.getElementById('opening');
+  var t1=0,ended=false;
+  function endOpening(){
+    if(ended)return; ended=true; clearTimeout(t1);
+    root.classList.add('go');
+    if(op){
+      op.classList.add('out');
+      setTimeout(function(){root.classList.remove('opening');},reduce?0:400);
+    }else{root.classList.remove('opening');}
+  }
+  if(root.classList.contains('opening')){
+    t1=setTimeout(endOpening,1950);
+    var sk=document.getElementById('skip');
+    sk.addEventListener('click',endOpening);
+    sk.focus({preventScroll:true});
+  }else{root.classList.add('go');}
+
+  /* ---- signature move: the card tilts toward you, foil slides, name shadow swings ---- */
+  var card=document.querySelector('.card[data-tilt]');
+  var px=0,py=0,kick=0,raf=0,kt=0,lastY=window.scrollY;
+  function paint(){
+    raf=0;
+    if(card){
+      card.style.setProperty('--rx',(-py*13+kick).toFixed(1)+'deg');
+      card.style.setProperty('--ry',(px*17).toFixed(1)+'deg');
+      card.style.setProperty('--mx',((px+1)*50).toFixed(0)+'%');
+    }
+    root.style.setProperty('--sx',(4-px*5).toFixed(1));
+    root.style.setProperty('--sy',(4-py*5).toFixed(1));
+  }
+  function queue(){if(!raf)raf=requestAnimationFrame(paint);}
+  if(!reduce){
+    addEventListener('pointermove',function(e){
+      px=Math.max(-1,Math.min(1,(e.clientX/innerWidth-.5)*2));
+      py=Math.max(-1,Math.min(1,(e.clientY/innerHeight-.5)*2));
+      queue();
+    },{passive:true});
+    addEventListener('scroll',function(){
+      var d=scrollY-lastY; lastY=scrollY;
+      kick=Math.max(-10,Math.min(10,d*.35)); queue();
+      clearTimeout(kt); kt=setTimeout(function(){kick=0;queue();},140);
+    },{passive:true});
+  }
+
+  /* ---- reveal on scroll ---- */
+  var rv=[].slice.call(document.querySelectorAll('.rv'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+    },{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+    rv.forEach(function(el){io.observe(el);});
+  }else{rv.forEach(function(el){el.classList.add('in');});}
+
+  /* ---- easter egg: roll a d20 (footer die, or type "roll") ---- */
+  var die=document.getElementById('die'),toast=document.getElementById('toast');
+  var tn=document.getElementById('t-n'),tm=document.getElementById('t-m'),rare=document.getElementById('rare');
+  var hide=0;
+  function say(n){
+    if(n===1)return 'Critical fail. You deleted the wrong file.';
+    if(n<=5)return 'Compiled with 40 warnings.';
+    if(n<=10)return 'It works on my machine.';
+    if(n<=15)return 'Tests passed. Mostly.';
+    if(n<=19)return 'Clean commit. Nobody had to revert it.';
+    return 'Natural 20. Card upgraded to Legendary.';
+  }
+  function roll(){
+    var n=1+Math.floor(Math.random()*20);
+    die.classList.remove('spin'); void die.offsetWidth; die.classList.add('spin');
+    tn.textContent='You rolled '+n; tm.textContent=say(n);
+    toast.classList.add('on');
+    if(n===20){root.classList.add('legend'); if(rare)rare.textContent='Legendary';}
+    clearTimeout(hide); hide=setTimeout(function(){toast.classList.remove('on');},3400);
+  }
+  die.addEventListener('click',roll);
+  var buf='';
+  addEventListener('keydown',function(e){
+    if(!e.key||e.key.length!==1)return;
+    buf=(buf+e.key.toLowerCase()).slice(-4);
+    if(buf==='roll'){buf='';roll();}
+  });
+})();
+</script>
+</body>
+</html>
